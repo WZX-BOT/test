@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -87,3 +88,53 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>随机抽选工具</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <h1>随机抽选工具</h1>
+  <p>请输入多条内容，每行一条：</p>
+  <textarea id="inputText" placeholder="例如：张三\n李四\n王五"></textarea><br>
+  <button onclick="pickRandom()">抽一个！</button>
+  <div id="result"></div>
+
+  <script>
+    function pickRandom() {
+      const input = document.getElementById('inputText').value.trim();
+      const lines = input.split('\n').filter(line => line.trim() !== '');
+      if (lines.length === 0) {
+        document.getElementById('result').innerText = '请先输入内容哦～';
+        return;
+      }
+      const randomLine = lines[Math.floor(Math.random() * lines.length)];
+      document.getElementById('result').innerText = '🎉 抽中的是：' + randomLine;
+    }
+  </script>
+</body>
+</html>
+>>>>>>> 34188916e425884756e103e90039e3338b55fda5

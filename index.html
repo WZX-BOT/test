@@ -1,90 +1,110 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>随机抽选工具</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>随机抽取器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'ZanHuaXiaoKai';
-      src: url('https://cdn.jsdelivr.net/gh/TheZhouYong/ZanHuaXiaoKai/ZanHuaXiaoKai-Regular.ttf') format('truetype');
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
     }
 
-    body {
-      font-family: 'ZanHuaXiaoKai', "Microsoft YaHei", serif;
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
       padding: 40px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
       text-align: center;
-      background-color: #fefcf9;
     }
 
     h1 {
-      font-size: 36px;
       margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 28px;
     }
 
     textarea {
-      width: 80%;
-      height: 200px;
-      font-size: 20px;
-      font-family: 'ZanHuaXiaoKai', "Microsoft YaHei", serif;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
       resize: vertical;
-      background-color: #fffaf4;
+      min-height: 100px;
+      margin-bottom: 20px;
     }
 
     button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 20px;
-      font-weight: bold;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
       border: none;
-      border-radius: 6px;
-      background-color: #9c6b30;
       color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-family: 'ZanHuaXiaoKai', serif;
+      transition: transform 0.2s, box-shadow 0.3s;
     }
 
     button:hover {
-      background-color: #7b4e1f;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
     }
 
-    #result {
+    .result {
       margin-top: 30px;
-      font-size: 26px;
-      color: #2f8a00;
+      font-size: 24px;
       font-weight: bold;
-      font-family: 'ZanHuaXiaoKai', serif;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>随机抽选工具</h1>
-  <p>请输入多条内容，每行一条：</p>
-  <textarea id="inputText" placeholder="例如：张三\n李四\n王五"></textarea><br>
-  <button onclick="pickRandom()">抽一个！</button>
-  <div id="result"></div>
+  <div class="container">
+    <h1>🎲 随机抽取器</h1>
+    <textarea id="input" placeholder="请输入选项，使用英文逗号或回车分隔，例如：张三,李四,王五"></textarea>
+    <br />
+    <button onclick="draw()">立即抽取</button>
+    <div id="result" class="result"></div>
+  </div>
 
   <script>
-    function pickRandom() {
-      const input = document.getElementById('inputText').value.trim();
-      const lines = input.split('\n').filter(line => line.trim() !== '');
-      if (lines.length === 0) {
-        document.getElementById('result').innerText = '请先输入内容哦～';
+    function draw() {
+      const input = document.getElementById("input").value;
+      const options = input.split(/[\n,，]+/).map(x => x.trim()).filter(x => x);
+      const resultBox = document.getElementById("result");
+
+      if (options.length === 0) {
+        resultBox.innerHTML = "⚠️ 请先输入至少一个内容！";
         return;
       }
-      const randomLine = lines[Math.floor(Math.random() * lines.length)];
-      document.getElementById('result').innerText = '🎉 抽中的是：' + randomLine;
+
+      const randomIndex = Math.floor(Math.random() * options.length);
+      const result = options[randomIndex];
+
+      resultBox.innerHTML = `🎉 抽取结果：<br>「${result}」`;
     }
   </script>
 </body>
 </html>
-
